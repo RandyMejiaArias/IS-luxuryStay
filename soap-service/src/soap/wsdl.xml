@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" 
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+             xmlns:tns="http://example.com/hotel"
+             name="HotelService">
+  <types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/hotel">
+      <element name="CheckAvailabilityRequest">
+        <complexType>
+          <sequence>
+            <element name="startDate" type="string"/>
+            <element name="endDate" type="string"/>
+            <element name="roomType" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CheckAvailabilityResponse">
+        <complexType>
+          <sequence>
+            <element name="availableRooms" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="CheckAvailabilityRequest">
+    <part name="parameters" element="tns:CheckAvailabilityRequest"/>
+  </message>
+  <message name="CheckAvailabilityResponse">
+    <part name="parameters" element="tns:CheckAvailabilityResponse"/>
+  </message>
+  <portType name="HotelPortType">
+    <operation name="CheckAvailability">
+      <input message="tns:CheckAvailabilityRequest"/>
+      <output message="tns:CheckAvailabilityResponse"/>
+    </operation>
+  </portType>
+  <binding name="HotelBinding" type="tns:HotelPortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="CheckAvailability">
+      <soap:operation soapAction="http://example.com/hotel/CheckAvailability"/>
+      <input><soap:body use="literal"/></input>
+      <output><soap:body use="literal"/></output>
+    </operation>
+  </binding>
+  <service name="HotelService">
+    <port name="HotelPort" binding="tns:HotelBinding">
+      <soap:address location="http://localhost:3000/wsdl"/>
+    </port>
+  </service>
+</definitions>

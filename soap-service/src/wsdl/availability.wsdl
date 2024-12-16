@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:tns="http://www.example.org/availability"
+             name="AvailabilityService"
+             targetNamespace="http://www.example.org/availability">
+
+    <message name="CheckAvailabilityRequest">
+        <part name="startDate" type="xsd:date"/>
+        <part name="endDate" type="xsd:date"/>
+        <part name="roomType" type="xsd:string"/>
+    </message>
+
+    <message name="CheckAvailabilityResponse">
+        <part name="availabilityList" type="xsd:string"/>
+    </message>
+
+    <portType name="AvailabilityServicePortType">
+        <operation name="CheckAvailability">
+            <input message="tns:CheckAvailabilityRequest"/>
+            <output message="tns:CheckAvailabilityResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="AvailabilityServiceSoapBinding" type="tns:AvailabilityServicePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="CheckAvailability">
+            <soap:operation soapAction="http://www.example.org/availability/CheckAvailability"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="AvailabilityService">
+        <port name="AvailabilityServiceSoapPort" binding="tns:AvailabilityServiceSoapBinding">
+            <soap:address location="http://localhost:8001/wsdl"/>
+        </port>
+    </service>
+</definitions>
