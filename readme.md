@@ -2,7 +2,7 @@
 El sistema consta de 3 aplicaciones distintas, cada una se encuentra en su respectivo directorio.
 
 ## Contrucción y ejecucion
-Se puede construir los 3 proyectos en conjunto usando docker con el archivo docker-compose ubicado en la raíz del proyecto.
+Se puede construir los 3 proyectos en conjunto usando docker con el archivo docker-compose ubicado en la raíz del proyecto. El mismo creará las aplicaciones NodeJs y las bases de datos respectivas para cada proyecto.
 
 Las 3 aplicaciones son hechas con NodeJs, para construirlas independientemente se puede ejecutar el comando npm install en la raíz de cada proyecto.
 
