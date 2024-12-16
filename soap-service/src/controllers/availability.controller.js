@@ -15,7 +15,7 @@ export const checkAvailability = async (args) => {
     },
   });
 
-  const externalServiceURL = 'http://localhost:4000/rooms';
+  const externalServiceURL = 'http://microservicio:4000/rooms';
   const { data: externalRooms } = await axios.get(externalServiceURL);
 
   for (const externalRoom of externalRooms) {

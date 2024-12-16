@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  db-soap:
+    image: mysql:8
+    container_name: db-soap
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: soapservice
+    volumes:
+      - ./scripts/soapService.sql:/docker-entrypoint-initdb.d/create_db.sql
+    networks:
+      - app-network
+
+  db-microservicio:
+    image: mysql:8
+    container_name: db-microservicio
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: microservicio
+    volumes:
+      - ./scripts/microservicio.sql:/docker-entrypoint-initdb.d/create_db.sql
+    networks:
+      - app-network
+
+  db-api:
+    image: mysql:8
+    container_name: db-api
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: api
+    volumes:
+      - ./scripts/api.sql:/docker-entrypoint-initdb.d/create_db.sql
+    networks:
+      - app-network
+      
+  soap-service:
+    build:
+      context: ./soap-service
+    container_name: soap-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db-soap
+    env_file:
+      - ./soap-service/.env  # Cargar el archivo .env de soap-service:
+    networks:
+      - app-network
+
+  microservicio:
+    build:
+      context: ./microservicio
+    container_name: microservicio
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db-microservicio
+    env_file:
+      - ./microservicio/.env  # Cargar el archivo .env de microservicio
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: ./api
+    container_name: api
+    ports:
+      - "4001:4001"
+    depends_on:
+      - db-api
+    env_file:
+      - ./api/.env  # Cargar el archivo .env de api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

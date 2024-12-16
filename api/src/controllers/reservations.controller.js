@@ -27,7 +27,7 @@ export const createReservation = async (req, res) => {
   try {
     const { room_number, customer_name, start_date, end_date } = req.body;
 
-    const externalServiceURL = 'http://localhost:4000/rooms';
+    const externalServiceURL = 'http://microservicio:4000/rooms';
     const { data: externalRooms } = await axios.get(externalServiceURL);
 
     const room = externalRooms.find(room => room.room_number === room_number);

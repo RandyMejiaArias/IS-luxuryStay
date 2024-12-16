@@ -3,7 +3,7 @@ import soap from 'soap';
 export const checkSoapAvailability = async (room_type, start_date, end_date) => {
   return new Promise((resolve, reject) => {
     
-    const url = 'http://localhost:3000/wsdl';
+    const url = 'http://soap-service:3000/wsdl';
 
     const args = {
       startDate: start_date,
